@@ -1,0 +1,47 @@
+{
+    "workbench.colorTheme": "Visual Studio Dark",
+    "files.autoSave": "off",
+    "typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib",
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": false,
+    "workbench.iconTheme": "vscode-icons",
+    "vsicons.dontShowNewVersionMessage": true,
+    "python.pythonPath": "/bin/python3",
+    "python.linting.pylintEnabled": true,
+    "l13Diff.enableTrash": "off",
+    "l13Diff.exclude": [
+        "**/.DS_Store",
+        "**/.git",
+        "**/.hg",
+        "**/.svn",
+        "**/CVS",
+        "**/node_modules",
+        "**/*.bk",
+        "**/dist",
+        "**/bin",
+        "**/coverage"
+    ],
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "args": [
+                "-l"
+            ],
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "fish": {
+            "path": "fish"
+        },
+        "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+        },
+        "pwsh": {
+            "path": "pwsh",
+            "icon": "terminal-powershell"
+        },
+    },
+}
