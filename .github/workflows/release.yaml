@@ -13,7 +13,12 @@ jobs:
           ref: main
       - id: versions
         run: |
-          make show-versions >> "$GITHUB_OUTPUT"
+          make print-TAG                  >> "$GITHUB_OUTPUT"
+          make print-CODE_SERVER_BASE_TAG >> "$GITHUB_OUTPUT"
+          make print-GOLANG_VERSION       >> "$GITHUB_OUTPUT"
+          make print-NODE_VERSION=$       >> "$GITHUB_OUTPUT"
+          make print-PYTHON_VERSION       >> "$GITHUB_OUTPUT"
+          make print-DOCKER_VERSION       >> "$GITHUB_OUTPUT"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -32,7 +37,7 @@ jobs:
           file: Dockerfile
           tags: ghcr.io/cosmo/code-server:${{ steps.versions.outputs.TAG }}
           build-args: |
-            CODE_SERVER_BASE_TAG=${{ steps.versions.outputs.TAG }}
+            CODE_SERVER_BASE_TAG=${{ steps.versions.outputs.CODE_SERVER_BASE_TAG }}
             GOLANG_VERSION=${{ steps.versions.outputs.GOLANG_VERSION }}
             NODE_VERSION=${{ steps.versions.outputs.NODE_VERSION }}
             PYTHON_VERSION=${{ steps.versions.outputs.PYTHON_VERSION }}

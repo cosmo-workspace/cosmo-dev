@@ -7,14 +7,7 @@ NODE_VERSION ?= 18.12.1
 PYTHON_VERSION ?= 3.11.1
 DOCKER_VERSION ?= 20.10.21
 
-.PHONY: show-versions
-show-versions:
-	@echo "TAG=$(CODE_SERVER_BASE_TAG)-$(VERSION)"
-	@echo "CODE_SERVER_BASE_TAG=$(CODE_SERVER_BASE_TAG)"
-	@echo "GOLANG_VERSION=$(GOLANG_VERSION)"
-	@echo "NODE_VERSION=$(NODE_VERSION)"
-	@echo "PYTHON_VERSION=$(PYTHON_VERSION)"
-	@echo "DOCKER_VERSION=$(DOCKER_VERSION)"
+print-%  : ; @echo $*=$($*)
 
 .PHONY: build
 build: 
