@@ -7,6 +7,15 @@ NODE_VERSION ?= 18.12.1
 PYTHON_VERSION ?= 3.11.1
 DOCKER_VERSION ?= 20.10.21
 
+.PHONY: show-versions
+show-versions:
+	@echo "tag=$(CODE_SERVER_BASE_TAG)-$(VERSION)"
+	@echo "code-server-basetag=$(CODE_SERVER_BASE_TAG)"
+	@echo "go-version=$(GOLANG_VERSION)"
+	@echo "node-version=$(NODE_VERSION)"
+	@echo "python-version=$(PYTHON_VERSION)"
+	@echo "docker-version=$(DOCKER_VERSION)"
+
 .PHONY: build
 build: 
 	DOCKER_BUILDKIT=1 docker build . -t $(IMAGE):$(CODE_SERVER_BASE_TAG)-$(VERSION) \
@@ -26,4 +35,4 @@ configmap:
 
 .PHONY: install
 install:
-	helm upgrade --install -n code-server --create-namespace  code-server charts/code-server/ -f values.yaml
+	helm upgrade --install -n code-server --create-namespace  code-server charts/code-server/
