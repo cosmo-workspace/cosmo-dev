@@ -32,7 +32,7 @@ jobs:
           file: Dockerfile
           tags: ghcr.io/cosmo/code-server:${{ steps.versions.outputs.TAG }}
           build-args: |
-            CODE_SERVER_BASE_TAG=${{ steps.versions.outputs.CODE_SERVER_BASE_TAG }}
+            CODE_SERVER_BASE_TAG=${{ steps.versions.outputs.TAG }}
             GOLANG_VERSION=${{ steps.versions.outputs.GOLANG_VERSION }}
             NODE_VERSION=${{ steps.versions.outputs.NODE_VERSION }}
             PYTHON_VERSION=${{ steps.versions.outputs.PYTHON_VERSION }}
