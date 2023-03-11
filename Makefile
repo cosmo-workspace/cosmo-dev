@@ -1,6 +1,7 @@
 IMAGE ?= ghcr.io/cosmo/code-server
 VERSION ?= 0.0.1
 
+TAG ?= $(CODE_SERVER_BASE_TAG)-$(VERSION)
 CODE_SERVER_BASE_TAG ?= 4.10.0
 GOLANG_VERSION ?= 1.19.4
 NODE_VERSION ?= 18.12.1
@@ -11,7 +12,7 @@ print-%  : ; @echo $*=$($*)
 
 .PHONY: build
 build: 
-	DOCKER_BUILDKIT=1 docker build . -t $(IMAGE):$(CODE_SERVER_BASE_TAG)-$(VERSION) \
+	DOCKER_BUILDKIT=1 docker build . -t $(IMAGE):$(TAG) \
 		--build-arg CODE_SERVER_BASE_TAG=$(CODE_SERVER_BASE_TAG) \
 		--build-arg GOLANG_VERSION=$(GOLANG_VERSION) \
 		--build-arg NODE_VERSION=$(NODE_VERSION) \
