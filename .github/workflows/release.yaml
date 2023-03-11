@@ -30,12 +30,12 @@ jobs:
         with:
           push: true
           file: Dockerfile
-          tags: ghcr.io/cosmo/code-server:${{ needs.versions.outputs.tag }}
+          tags: ghcr.io/cosmo/code-server:${{ steps.versions.outputs.TAG }}
           build-args: |
-            CODE_SERVER_BASE_TAG=${{ needs.versions.outputs.code-server-basetag }}
-            GOLANG_VERSION=${{ needs.versions.outputs.go-version }}
-            NODE_VERSION=${{ needs.versions.outputs.node-version }}
-            PYTHON_VERSION=${{ needs.versions.outputs.python-version }}
-            DOCKER_VERSION=${{ needs.versions.outputs.docker-version }}
+            CODE_SERVER_BASE_TAG=${{ steps.versions.outputs.CODE_SERVER_BASE_TAG }}
+            GOLANG_VERSION=${{ steps.versions.outputs.GOLANG_VERSION }}
+            NODE_VERSION=${{ steps.versions.outputs.NODE_VERSION }}
+            PYTHON_VERSION=${{ steps.versions.outputs.PYTHON_VERSION }}
+            DOCKER_VERSION=${{ steps.versions.outputs.DOCKER_VERSION }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

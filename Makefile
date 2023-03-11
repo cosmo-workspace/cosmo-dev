@@ -9,12 +9,12 @@ DOCKER_VERSION ?= 20.10.21
 
 .PHONY: show-versions
 show-versions:
-	@echo "tag=$(CODE_SERVER_BASE_TAG)-$(VERSION)"
-	@echo "code-server-basetag=$(CODE_SERVER_BASE_TAG)"
-	@echo "go-version=$(GOLANG_VERSION)"
-	@echo "node-version=$(NODE_VERSION)"
-	@echo "python-version=$(PYTHON_VERSION)"
-	@echo "docker-version=$(DOCKER_VERSION)"
+	@echo "TAG=$(CODE_SERVER_BASE_TAG)-$(VERSION)"
+	@echo "CODE_SERVER_BASE_TAG=$(CODE_SERVER_BASE_TAG)"
+	@echo "GOLANG_VERSION=$(GOLANG_VERSION)"
+	@echo "NODE_VERSION=$(NODE_VERSION)"
+	@echo "PYTHON_VERSION=$(PYTHON_VERSION)"
+	@echo "DOCKER_VERSION=$(DOCKER_VERSION)"
 
 .PHONY: build
 build: 
