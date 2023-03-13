@@ -21,12 +21,8 @@ build:
 
 .PHONY: template
 template: configmap
-	@helm template code-server charts/code-server/ --debug
+	@helm template code-server charts/charts/dev-code-server/ --debug
 
 .PHONY: configmap
 configmap:
 	@bash scripts/genconfigmap.sh
-
-.PHONY: install
-install:
-	helm upgrade --install -n code-server --create-namespace  code-server charts/code-server/
