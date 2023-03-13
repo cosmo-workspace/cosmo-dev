@@ -24,7 +24,7 @@ jobs:
           git config --global user.email 'actions@github.com'
           git add Makefile
           git commit -m "Update version to ${{ env.tag }}"
-          git push origin HEAD:${GITHUB_REF#refs/heads/}
+          git push origin main
       - id: versions
         run: |
           make print-TAG VERSION=${{ env.TAG_NAME }} >> "$GITHUB_ENV"
