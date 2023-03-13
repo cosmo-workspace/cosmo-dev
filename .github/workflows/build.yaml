@@ -1,4 +1,4 @@
-name: Release build
+name: Manual build
 on:
   workflow_dispatch:
     inputs:

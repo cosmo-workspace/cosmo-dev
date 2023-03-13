@@ -15,9 +15,9 @@ jobs:
           ref: main
       - name: Get tag name
         id: tag-name
-        run: echo "release_tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV # 環境ファイルにtag変数を追加する
+        run: echo "release_tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Update version in Makefile
-        run: sed -i "s/^VERSION ?= .*/VERSION ?= ${{ env.release_tag }}/" Makefile # env.tagで変数を参照する
+        run: sed -i "s/^VERSION ?= .*/VERSION ?= ${{ env.release_tag }}/" Makefile
       - name: Commit changes
         run: |
           git config --global user.name 'GitHub Actions'
