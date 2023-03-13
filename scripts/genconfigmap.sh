@@ -1,6 +1,6 @@
 FILES_DIR=files
 KUSTMIZATION_FILE=$FILES_DIR/kustomization.yaml
-OUTPUT_FILE=charts/code-server/templates/configmap.yaml
+OUTPUT_FILE=charts/charts/dev-code-server/templates/configmap.yaml
 
 rm -f $KUSTMIZATION_FILE
 
