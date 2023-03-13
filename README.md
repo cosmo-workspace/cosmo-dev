@@ -13,4 +13,4 @@ helm upgrade --install -n cosmo-dev --create-namespace code-server cosmo/dev-cod
 ```
 
 You can change install options for example using Ingress on your cluster.
-Please see `values.yaml` for all of the available install options.
+Please see [`values.yaml`](https://github.com/cosmo-workspace/charts/blob/main/charts/dev-code-server/values.yamls) for all of the available install options.
