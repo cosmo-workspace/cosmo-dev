@@ -1,7 +1,7 @@
 IMAGE ?= ghcr.io/cosmo-workspace/dev-code-server
-VERSION ?= 0.0.1
+VERSION ?= v0.0.1
 
-TAG ?= $(CODE_SERVER_BASE_TAG)-$(VERSION)
+TAG ?= $(VERSION)-$(CODE_SERVER_BASE_TAG)
 CODE_SERVER_BASE_TAG ?= 4.10.0
 GOLANG_VERSION ?= 1.19.4
 NODE_VERSION ?= 18.12.1
