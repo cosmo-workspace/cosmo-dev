@@ -17,17 +17,17 @@ jobs:
         id: tag-name
         run: echo "release_tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Update version in Makefile
-        run: sed -i "s/^VERSION ?= .*/VERSION ?= ${{ env.release_tag }}/" Makefile
-      - name: Commit changes
         run: |
+          sed -i "s/^VERSION ?= .*/VERSION ?= ${{ env.release_tag }}/" Makefile
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add Makefile
-          git commit -m "Update version to ${{ env.tag }}"
+          git commit -m "Update version to ${{ env.release_tag }}"
           git push origin main
+        continue-on-error: true
       - id: versions
         run: |
-          make print-TAG VERSION=${{ env.TAG_NAME }} >> "$GITHUB_ENV"
+          make print-TAG VERSION=${{ env.release_tag }} >> "$GITHUB_ENV"
           make print-CODE_SERVER_BASE_TAG >> "$GITHUB_ENV"
           make print-GOLANG_VERSION       >> "$GITHUB_ENV"
           make print-NODE_VERSION         >> "$GITHUB_ENV"
