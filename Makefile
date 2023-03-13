@@ -1,5 +1,5 @@
 IMAGE ?= ghcr.io/cosmo-workspace/dev-code-server
-VERSION ?= v0.0.1
+VERSION ?= dummy
 
 TAG ?= $(VERSION)-$(CODE_SERVER_BASE_TAG)
 CODE_SERVER_BASE_TAG ?= 4.10.0
