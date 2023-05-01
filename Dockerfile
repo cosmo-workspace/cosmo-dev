@@ -6,6 +6,8 @@ ARG GOLANG_VERSION="1.19.4"
 ARG NODE_VERSION="18.12.1"
 ARG PYTHON_VERSION="3.11.1"
 ARG DOCKER_VERSION="20.10.21"
+ARG KUBECTL_VERSION="1.26.2"
+ARG KUSTMIZE_VERSION="5.0.0"
 
 USER 0
 RUN apt-get -y update \
@@ -177,7 +179,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 ## kubectl install
 ##     https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 ##---------------------------------------------------
-RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+RUN curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
  && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
  && kubectl version --client
 
@@ -185,7 +187,7 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
 ## kustomize install
 ##---------------------------------------------------
 RUN cd /usr/bin \
- && curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash \
+ && curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- ${KUSTMIZE_VERSION} \
  && kustomize version
 
 ##---------------------------------------------------
