@@ -27,6 +27,7 @@ jobs:
         continue-on-error: true
       - id: versions
         run: |
+          make print-VERSION              >> "$GITHUB_ENV"
           make print-TAG VERSION=${{ env.release_tag }} >> "$GITHUB_ENV"
           make print-CODE_SERVER_BASE_TAG >> "$GITHUB_ENV"
           make print-GOLANG_VERSION       >> "$GITHUB_ENV"
@@ -49,7 +50,9 @@ jobs:
         with:
           push: true
           file: Dockerfile
-          tags: ghcr.io/cosmo-workspace/dev-code-server:${{ env.TAG }}
+          tags: |
+            ghcr.io/cosmo-workspace/dev-code-server:${{ env.TAG }}
+            ghcr.io/cosmo-workspace/dev-code-server:${{ env.VERSION }}
           build-args: |
             CODE_SERVER_BASE_TAG=${{ env.CODE_SERVER_BASE_TAG }}
             GOLANG_VERSION=${{ env.GOLANG_VERSION }}
