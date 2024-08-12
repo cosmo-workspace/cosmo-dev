@@ -26,7 +26,7 @@ jobs:
           docker pull ghcr.io/cosmo-workspace/dev-code-server:${{ env.TAG }} && echo ALREADY_EXIST="1" >> "$GITHUB_ENV" || echo
       - id: printenv
         run: |
-          printenv
+          printenv | sort
       - if: env.ALREADY_EXIST != '1'
         run: gh workflow run build.yaml -f CODE_SERVER_BASE_TAG=${{ env.LATEST }}
         env:
