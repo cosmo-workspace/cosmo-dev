@@ -25,6 +25,8 @@ jobs:
           make print-NODE_VERSION         >> "$GITHUB_ENV"
           make print-PYTHON_VERSION       >> "$GITHUB_ENV"
           make print-DOCKER_VERSION       >> "$GITHUB_ENV"
+          make print-KUBECTL_VERSION      >> "$GITHUB_ENV"
+          make print-KUSTMIZE_VERSION     >> "$GITHUB_ENV"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
