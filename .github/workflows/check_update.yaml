@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v3.5.2
       - id: check_update
         run: |
-           gh release list --repo coder/code-server 
-           echo LATEST=`gh release list --repo coder/code-server | grep -i latest | cut -f 1` >> "$GITHUB_ENV"
+          RELEASES=$(gh release list --repo coder/code-server)
+          echo LATEST=$(echo "$RELEASES" | grep -i latest | cut -f 1) >> "$GITHUB_ENV"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: image_tag
@@ -23,13 +23,8 @@ jobs:
           make print-TAG CODE_SERVER_BASE_TAG=${{ env.LATEST }} >> "$GITHUB_ENV"
       - id: check_image_already_built
         run: |
-          docker pull ghcr.io/cosmo-workspace/dev-code-server:${{ env.TAG }} && echo ALREADY_EXIST="1" >> "$GITHUB_ENV" || echo
-
-  trigger_build:
-    if: env.ALREADY_EXIST != "1"
-    name: trigger build dev-code-server
-    runs-on: ubuntu-latest
-    steps:
-      - run: gh workflow run build.yml -f CODE_SERVER_BASE_TAG=${{ env.LATEST }}
+          docker pull ghcr.io/cosmo-workspace/dev-code-server:${{ env.TAG }} && echo ALREADY_EXIST="1" >> "$GITHUB_OUTPUT" || echo
+      - if: env.ALREADY_EXIST != '1'
+        run: gh workflow run build.yml -f CODE_SERVER_BASE_TAG=${{ env.LATEST }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
