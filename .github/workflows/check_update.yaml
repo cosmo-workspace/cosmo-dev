@@ -1,3 +1,5 @@
+name: Bump Build 💪
+
 on:
   schedule:
   - cron: "0 10 * * *"
