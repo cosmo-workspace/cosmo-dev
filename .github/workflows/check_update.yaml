@@ -15,7 +15,7 @@ jobs:
       - id: check_update
         run: |
           RELEASES=$(gh release list --repo coder/code-server)
-          echo LATEST=$(echo "$RELEASES" | grep -i latest | cut -f 1) >> "$GITHUB_ENV"
+          echo LATEST=$(echo "$RELEASES" | grep -i latest | cut -f 1 | sed 's/v//') >> "$GITHUB_ENV"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: image_tag
