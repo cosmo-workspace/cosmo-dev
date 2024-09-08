@@ -52,5 +52,7 @@ jobs:
             NODE_VERSION=${{ env.NODE_VERSION }}
             PYTHON_VERSION=${{ env.PYTHON_VERSION }}
             DOCKER_VERSION=${{ env.DOCKER_VERSION }}
+            KUBECTL_VERSION=${{ env.KUBECTL_VERSION }}
+            KUSTMIZE_VERSION=${{ env.KUSTMIZE_VERSION }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
