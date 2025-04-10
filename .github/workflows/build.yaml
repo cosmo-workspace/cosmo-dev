@@ -43,6 +43,7 @@ jobs:
         with:
           push: true
           file: Dockerfile
+          platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/cosmo-workspace/dev-code-server:${{ env.TAG }}
             ghcr.io/cosmo-workspace/dev-code-server:${{ env.VERSION }}
