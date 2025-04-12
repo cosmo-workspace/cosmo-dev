@@ -103,13 +103,19 @@ RUN groupadd --gid 1001 node \
   && useradd --uid 1001 --gid node --shell /bin/bash --create-home node
 
 RUN set -ex \
-  && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
-  && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.xz" \
+  && ARCH=$( \
+      case $(dpkg --print-architecture) in \
+        amd64 ) echo "x64";; \
+        arm64 ) echo "arm64";; \
+      esac \
+     ) \
+  && curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
+  && tar -xJf "node-v$NODE_VERSION-linux-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner \
+  && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
   && node --version \
   && npm --version \
-  && corepack enable \
+  && npm install -g corepack@latest && corepack enable \
   && yarn --version \
   && pnpm --version
 
@@ -121,12 +127,18 @@ RUN set -ex \
 ##---------------------------------------------------
 ENV PATH /usr/local/go/bin:$PATH
 
-RUN set -eux; \
-	url="https://dl.google.com/go/go${GOLANG_VERSION}.linux-amd64.tar.gz"; \
-	wget -O go.tgz "$url" --progress=dot:giga; \
-	tar -C /usr/local -xzf go.tgz; \
-	rm go.tgz; \
-	go version
+RUN set -eux \
+  && ARCH=$( \
+     case $(dpkg --print-architecture) in \
+       amd64 ) echo "x64";; \
+       arm64 ) echo "arm64";; \
+     esac \
+     ) \
+  && url="https://dl.google.com/go/go${GOLANG_VERSION}.linux-$ARCH.tar.gz" \
+  && wget -O go.tgz "$url" --progress=dot:giga \
+  && tar -C /usr/local -xzf go.tgz \
+  && rm go.tgz \
+  && go version
 
 # GOPATH is set in .bash_profile
 # ENV GOPATH /go
@@ -156,12 +168,19 @@ ENV LANG="ja_JP.UTF-8"
 ##---------------------------------------------------
 ## Docker CLI install
 ##---------------------------------------------------
-RUN curl "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" -o "/tmp/docker.tgz" \
- && cd /tmp \
- && tar -xvf "docker.tgz" docker/docker \
- && cp --preserve=mode,timestamps ./docker/docker /usr/bin/ \
- && ls -l /usr/bin/docker \
- && rm -rf ./docker docker.tgz
+RUN ARCH=$( \
+  case $(dpkg --print-architecture) in \
+    amd64 ) echo "x86_64";; \
+    arm64 ) echo "aarch64";; \
+  esac \
+  ) \
+  && curl "https://download.docker.com/linux/static/stable/$ARCH/docker-${DOCKER_VERSION}.tgz" -o "/tmp/docker.tgz" \
+  && cd /tmp \
+  && tar -xvf "docker.tgz" docker/docker \
+  && cp --preserve=mode,timestamps ./docker/docker /usr/bin/ \
+  && ls -l /usr/bin/docker \
+  && rm -rf ./docker docker.tgz \
+  && docker --version
 
 ENV DOCKER_HOST tcp://localhost:2375
 
@@ -169,7 +188,13 @@ ENV DOCKER_HOST tcp://localhost:2375
 ## AWSCLI
 ##     https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html
 ##---------------------------------------------------
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+RUN ARCH=$( \
+ case $(dpkg --print-architecture) in \
+   amd64 ) echo "x86_64";; \
+   arm64 ) echo "aarch64";; \
+ esac \
+ ) \
+ && curl "https://awscli.amazonaws.com/awscli-exe-linux-$ARCH.zip" -o "awscliv2.zip" \
  && unzip awscliv2.zip \
  && ./aws/install \
  && rm -rf aws awscliv2.zip \
@@ -179,7 +204,13 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 ## kubectl install
 ##     https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 ##---------------------------------------------------
-RUN curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
+RUN ARCH=$( \
+ case $(dpkg --print-architecture) in \
+   amd64 ) echo "amd64";; \
+   arm64 ) echo "arm64";; \
+ esac \
+ ) \
+ && curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/$ARCH/kubectl" \
  && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
  && kubectl version --client
 
