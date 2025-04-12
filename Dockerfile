@@ -130,7 +130,7 @@ ENV PATH /usr/local/go/bin:$PATH
 RUN set -eux \
   && ARCH=$( \
      case $(dpkg --print-architecture) in \
-       amd64 ) echo "x64";; \
+       amd64 ) echo "amd64";; \
        arm64 ) echo "arm64";; \
      esac \
      ) \
